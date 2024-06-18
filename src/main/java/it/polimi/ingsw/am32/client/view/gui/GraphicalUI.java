@@ -2348,4 +2348,11 @@ public class GraphicalUI extends View {
     public String getThisPlayerNickname() {
         return thisPlayerNickname;
     }
+
+    // TODO implementare metodo
+    public void nodeDisconnected(){}
+
+    // TODO implementare metodo
+    public void nodeReconnected(){}
+
 }

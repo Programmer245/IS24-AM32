@@ -515,6 +515,10 @@ public abstract class View{
      * @param nickname The nickname of the player will be used to handle the event.
      */
     public abstract void handleEvent(Event event, String nickname);
+
+    public abstract void nodeDisconnected();
+
+    public abstract void nodeReconnected();
 }
 
 

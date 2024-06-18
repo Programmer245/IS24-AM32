@@ -2035,6 +2035,12 @@ public class TextUI extends View{
             }
         }
     }
+
+    // TODO implementare metodo
+    public void nodeDisconnected(){}
+
+    // TODO implementare metodo
+    public void nodeReconnected(){}
 }
 
 
