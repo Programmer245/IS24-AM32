@@ -108,7 +108,7 @@ public class TextUI extends View{
      * Unicode characters used to represent the icon PLANT
      */
     private static final String PLANT = "\uD83C\uDF3F";
-     /**
+    /**
      * Unicode characters used to represent the icon FUNGI
      */
     private static final String FUNGI = "\uD83C\uDF44";
@@ -1543,7 +1543,7 @@ public class TextUI extends View{
     @Override
     public void showMatchWinners(ArrayList<String> players, ArrayList<Integer> points, ArrayList<Integer> secrets,
                                  ArrayList<Integer> pointsGainedFromObj, ArrayList<String> winners) {
-        currentEvent = Event.TERMINATED;
+        Status = Event.TERMINATED;
         out.println("The match is ended !!!");
         out.println("The winners of the match are: "+winners);
         out.println("The final points of the players are following:");
@@ -2028,7 +2028,7 @@ public class TextUI extends View{
      */
     private synchronized String getInput() {
         String input = "";
-        if (!currentEvent.equals(Event.TERMINATED)) {
+        if (!Status.equals(Event.TERMINATED)) {
          input= in.nextLine();
         }
             switch (input) {
