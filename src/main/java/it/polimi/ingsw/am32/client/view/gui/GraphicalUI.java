@@ -401,6 +401,7 @@ public class GraphicalUI extends View {
 
         OkButton.setOnAction(e -> {
             OkButton.setDisable(true);
+            OkButton.setVisible(false);
             String ServerIP = ip.getText(); // Read the player's input and save it the server IP address
             String ServerPort = port.getText();
             try {
@@ -418,11 +419,12 @@ public class GraphicalUI extends View {
                 createAlert("Invalid PORT number!");
                 port.clear();
             } catch (ConnectionSetupFailedException ex) {
-                createAlert("Connection failed! Check the IP and/or PORT number and try again!");
+                createAlert("Connection failed! You can try again!");
                 ip.clear();
                 port.clear();
             }
             OkButton.setDisable(false);
+            OkButton.setVisible(true);
         });
 
         // set the action of the buttons (RMI)
@@ -433,6 +435,7 @@ public class GraphicalUI extends View {
 
         OkRMIButton.setOnAction(e -> {
             OkRMIButton.setDisable(true);
+            OkRMIButton.setVisible(false);
             String ServerIP = RMIIp.getText(); // Read the player's input and save it the server IP address
             String ServerPort = RMIPort.getText();
             try {
@@ -450,11 +453,12 @@ public class GraphicalUI extends View {
                 createAlert("Invalid port number");
                 port.clear();
             } catch (ConnectionSetupFailedException ex) {
-                createAlert("Connection failed! Check the IP and/or PORT number and try again!");
+                createAlert("Connection failed! You can try again!");
                 ip.clear();
                 port.clear();
             }
             OkRMIButton.setDisable(false);
+            OkRMIButton.setVisible(true);
         });
     }
 
