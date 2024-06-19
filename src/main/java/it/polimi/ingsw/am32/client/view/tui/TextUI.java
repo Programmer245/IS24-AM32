@@ -349,7 +349,7 @@ public class TextUI extends View{
                         ██║     ██║   ██║██║  ██║██╔══╝   ██╔██╗     ██║╚██╗██║██╔══██║   ██║   ██║   ██║██╔══██╗██╔══██║██║     ██║╚════██║
                         ╚██████╗╚██████╔╝██████╔╝███████╗██╔╝ ██╗    ██║ ╚████║██║  ██║   ██║   ╚██████╔╝██║  ██║██║  ██║███████╗██║███████║
                           ═════╝ ╚═════╝ ╚═════╝ ╚══════╝╚═╝  ╚═╝    ╚═╝  ╚═══╝╚═╝  ╚═╝   ╚═╝    ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝╚══════╝╚═╝╚══════╝""");
-        out.println("Game rule:https://it.boardgamearena.com/link?url=https%3A%2F%2Fcdn.1j1ju.com%2Fmedias%2Fa7%2Fd7%2F66-codex-naturalis-rulebook.pdf&id=9212");
+        out.println("Game rule:https://t.ly/ZtnYH");
     }
 
     //-------------------Game mode-------------------
@@ -1258,7 +1258,7 @@ public class TextUI extends View{
      * Method called when player opens chat from getInput method.
      * Enables the user to select a player to chat with, or chat with all players.
      * The user can also exit the chat.
-     * @implSpec BLOCKING
+     * @implSpec BLOCKING-BUT-RAN-FROM-RIT
      */
     @Override
     public void startChatting() {
@@ -2032,7 +2032,7 @@ public class TextUI extends View{
                 case "Chat" -> startChatting();
                 case "SP" -> showPlayerInGame();
                 case "SGS" -> out.println("The match status is: " + Status);
-                case "SR" -> out.println("Game rule:https://it.boardgamearena.com/link?url=https%3A%2F%2Fcdn.1j1ju.com%2Fmedias%2Fa7%2Fd7%2F66-codex-naturalis-rulebook.pdf&id=9212");
+                case "SR" -> out.println("Game rule:https://t.ly/ZtnYH");
                 case "SH" -> showHand();
                 case "SCO" -> showObjectiveCards(commonObjCards);
                 case "SSO" -> showCard(secretObjCardSelected, true);
