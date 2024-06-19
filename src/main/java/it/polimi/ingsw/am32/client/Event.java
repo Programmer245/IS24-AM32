@@ -4,12 +4,12 @@ package it.polimi.ingsw.am32.client;
  * Enumeration of the possible events that can occur during the game.
  */
 public enum Event {
-    LOBBY(0),
-    PREPARATION(1),
-    PLAYING(2),
-    TERMINATING(3),
-    LAST_TURN(4),
-    TERMINATED(5),
+    LOBBY(0), // STATUS
+    PREPARATION(1), // STATUS
+    PLAYING(2), // STATUS
+    TERMINATING(3), // STATUS
+    LAST_TURN(4), // STATUS
+    TERMINATED(5), // STATUS
     CHOOSE_CONNECTION (6),
     SELECT_GAME_MODE(7),
     CREATE_GAME(8),
@@ -31,7 +31,7 @@ public enum Event {
     DRAW_CARD(24),
     PLAYER_RECONNECTED(25),
     DRAW_CARD_FAILURE(26),
-    WELCOME(27),
+    WELCOME(27), // STATUS
     SELECTED_STARTER_CARD_SIDE(28),
     SELECTED_SECRET_OBJ_CARD(29),
     CARD_PLACED(30),
