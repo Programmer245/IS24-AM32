@@ -37,7 +37,10 @@ public enum Event {
     CARD_PLACED(30),
     CARD_DRAWN(31),
     WAITING_FOR_TURN(32),
-    CHAT_ERROR(33);
+    CHAT_ERROR(33),
+    CREATE_GAME_FAILURE(34),
+    JOIN_GAME_FAILURE(35),
+    RECONNECT_GAME_FAILURE(36);
 
     private final int value;
 

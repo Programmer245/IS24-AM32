@@ -191,6 +191,18 @@ public class TextUI extends View{
         boolean isEnd = false;
         while (!isEnd) { // TODO think about a better way to handle the flow of the game
             switch (Status) {
+                case CREATE_GAME_FAILURE -> {
+                    currentEvent = Event.CREATE_GAME;
+                    askCreateGame();
+                }
+                case JOIN_GAME_FAILURE -> {
+                    currentEvent = Event.JOIN_GAME;
+                    askJoinGame();
+                }
+                case RECONNECT_GAME_FAILURE -> {
+                    currentEvent = Event.RECONNECT_GAME;
+                    askReconnectGame();
+                }
                 case PREPARATION -> {
                     if(currentEvent.equals(Event.SELECT_STARTER_CARD_SIDE)) {
                         requestSelectStarterCardSide(startCard);
@@ -1935,48 +1947,44 @@ public class TextUI extends View{
 
     /**
      * Used method to handle the failure messages received from the server and to ask the user to try again.
+     * @implSpec NON-BLOCKING
      * @param event the event that failed.
      * @param reason the reason of the failure.
      */
     @Override
-    public void handleFailureCase(Event event,String reason){
-        out.println(reason);
+    public void handleFailureCase(Event event, String reason){
         switch (event){
-            case CHOOSE_CONNECTION -> { // Connection failure
-                out.println("Please try again:");
-                chooseConnection();
+            case CREATE_GAME-> { // Should never happen!
+                out.println("Please try again! Reason: " + reason);
+                Status = Event.CREATE_GAME_FAILURE; // We need to set Status and not currentEvent since it is not game-related!
             }
-            case CREATE_GAME-> { // Create game failure
-                out.println("Please try again:");
-                askCreateGame();
+            case JOIN_GAME-> {
+                out.println("Please try again! Reason: " + reason);
+                Status = Event.JOIN_GAME_FAILURE; // We need to set Status and not currentEvent since it is not game-related!
             }
-            case JOIN_GAME-> { // Join game failure
-                out.println("Please try again:");
-                askJoinGame();
+            case RECONNECT_GAME -> {
+                out.println("Please try again! Reason: " + reason);
+                Status = Event.RECONNECT_GAME_FAILURE; // We need to set Status and not currentEvent since it is not game-related!
             }
-            case RECONNECT_GAME -> { // Reconnect game failure
-                out.println("Please try again:");
-                askReconnectGame();
-            }
-            case PLACE_CARD_FAILURE -> { // Place card failure
-                out.println("Please try again:");
+            case PLACE_CARD_FAILURE -> {
+                out.println("Please try again! Reason: " + reason);
                 currentEvent = Event.PLACE_CARD;
             }
-            case DRAW_CARD_FAILURE -> { // Draw card failure
-                out.println("Please try again:");
+            case DRAW_CARD_FAILURE -> {
+                out.println("Please try again! Reason: " + reason);
                 currentEvent = Event.DRAW_CARD;
             }
-            case SELECT_SECRET_OBJ_CARD_FAILURE -> { // Select secret objective card failure
-                out.println("Please try again:");
+            case SELECT_SECRET_OBJ_CARD_FAILURE -> {
+                out.println("Please try again! Reason: " + reason);
                 currentEvent = Event.SELECTED_SECRET_OBJ_CARD;
             }
-            case SELECT_STARTER_CARD_SIDE_FAILURE -> { // Select starter card side failure
-                out.println("Please try again:");
+            case SELECT_STARTER_CARD_SIDE_FAILURE -> {
+                out.println("Please try again! Reason: " + reason);
                 currentEvent = Event.SELECT_STARTER_CARD_SIDE;
             }
-            case CHAT_ERROR -> { // Chat error
-                out.println("!The last message was not sent!");
-                ChatMessage error = new ChatMessage("NOTICE",thisPlayerNickname, false,"The last message was not sent! "+reason);
+            case CHAT_ERROR -> {
+                out.println("The last message was not sent! Reason: " + reason);
+                ChatMessage error = new ChatMessage("NOTICE", thisPlayerNickname, false,"The last message was not sent! " + reason);
                 chatHistory.add(error);
             }
         }
