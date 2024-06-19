@@ -191,17 +191,12 @@ public class TextUI extends View{
         boolean isEnd = false;
         while (!isEnd) { // TODO think about a better way to handle the flow of the game
             switch (Status) {
-                case CREATE_GAME_FAILURE -> {
-                    currentEvent = Event.CREATE_GAME;
-                    askCreateGame();
-                }
-                case JOIN_GAME_FAILURE -> {
-                    currentEvent = Event.JOIN_GAME;
-                    askJoinGame();
-                }
-                case RECONNECT_GAME_FAILURE -> {
-                    currentEvent = Event.RECONNECT_GAME;
-                    askReconnectGame();
+                case WELCOME -> {
+                    switch (currentEvent) {
+                        case CREATE_GAME_FAILURE -> askCreateGame();
+                        case JOIN_GAME_FAILURE -> askJoinGame();
+                        case RECONNECT_GAME_FAILURE -> askReconnectGame();
+                    }
                 }
                 case PREPARATION -> {
                     if(currentEvent.equals(Event.SELECT_STARTER_CARD_SIDE)) {
@@ -234,6 +229,7 @@ public class TextUI extends View{
      * RMI connection, the method asks the player to insert the server URL.
      * The method uses the {@link IsValid} class to check the validity of the IP address and the port number entered by
      * the player.
+     * @implSpec BLOCKING-NON-INTERRUPTIBLE
      */
     @Override
     public void chooseConnection() {
@@ -1565,6 +1561,7 @@ public class TextUI extends View{
     }
 
     //-------------------Card Factory-------------------
+
     /**
      * Search the card description based on the ID of the card.
      * @implSpec NON-BLOCKING
@@ -1956,15 +1953,15 @@ public class TextUI extends View{
         switch (event){
             case CREATE_GAME-> { // Should never happen!
                 out.println("Please try again! Reason: " + reason);
-                Status = Event.CREATE_GAME_FAILURE; // We need to set Status and not currentEvent since it is not game-related!
+                currentEvent = Event.CREATE_GAME_FAILURE;
             }
             case JOIN_GAME-> {
                 out.println("Please try again! Reason: " + reason);
-                Status = Event.JOIN_GAME_FAILURE; // We need to set Status and not currentEvent since it is not game-related!
+                currentEvent = Event.JOIN_GAME_FAILURE;
             }
             case RECONNECT_GAME -> {
                 out.println("Please try again! Reason: " + reason);
-                Status = Event.RECONNECT_GAME_FAILURE; // We need to set Status and not currentEvent since it is not game-related!
+                currentEvent = Event.RECONNECT_GAME_FAILURE;
             }
             case PLACE_CARD_FAILURE -> {
                 out.println("Please try again! Reason: " + reason);
