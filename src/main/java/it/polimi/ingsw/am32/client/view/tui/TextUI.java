@@ -124,9 +124,9 @@ public class TextUI extends View{
      * Unicode characters used to represent the icon INKWELL
      */
     private static final String INKWELL = "\uD83C\uDF6F";
-/**
-     * Unicode characters used to represent the icon MANUSCRIPT
-     */
+    /**
+    * Unicode characters used to represent the icon MANUSCRIPT
+    */
     private static final String MANUSCRIPT = "\uD83D\uDCDC";
     /**
      * Unicode characters used to represent the icon “X”;
@@ -167,6 +167,7 @@ public class TextUI extends View{
 
     /**
      * Constructor of the class TextUI
+     * @implSpec NON-BLOCKING
      */
     public TextUI() {
         super();
@@ -311,7 +312,7 @@ public class TextUI extends View{
     /**
      * Method that sets the socket client with the server IP and the server port entered by the player and attempts to
      * establish the connection between the client and the server.
-     *
+     * @implSpec NON-BLOCKING
      * @param serverIP the server IP entered by the player
      * @param port     the server port entered by the player
      */
@@ -323,7 +324,7 @@ public class TextUI extends View{
     /**
      * Method that sets the RMI client with the server URL entered by the player and attempts to establish the
      * connection between the client and the server.
-     *
+     * @implSpec NON-BLOCKING
      * @param serverURL the server URL entered by the player
      * @see View#setSocketClient(String, int)
      */
@@ -331,10 +332,12 @@ public class TextUI extends View{
     public void setRMIClient(String serverURL, int port) throws ConnectionSetupFailedException {
         super.setRMIClient(serverURL, port); // see the method in the superclass
     }
+
     //-------------------Title-------------------
 
     /**
      * Method that prints the welcome message and link to the game rules.
+     * @implSpec NON-BLOCKING
      */
     @Override
     public void showWelcome() {
@@ -348,6 +351,7 @@ public class TextUI extends View{
                           ═════╝ ╚═════╝ ╚═════╝ ╚══════╝╚═╝  ╚═╝    ╚═╝  ╚═══╝╚═╝  ╚═╝   ╚═╝    ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝╚══════╝╚═╝╚══════╝""");
         out.println("Game rule:https://it.boardgamearena.com/link?url=https%3A%2F%2Fcdn.1j1ju.com%2Fmedias%2Fa7%2Fd7%2F66-codex-naturalis-rulebook.pdf&id=9212");
     }
+
     //-------------------Game mode-------------------
 
     /**
@@ -462,7 +466,7 @@ public class TextUI extends View{
     /**
      * Once the player receives the NewGameConfirmationMessage from the server, the method is called by processMessage
      * to store the gameID, the nickname of the player who created the game, and add it in the list of players.
-     *
+     * @implSpec NON-BLOCKING
      * @param gameID the game ID returned by the server after the confirmation of the new game
      * @param recipientNickname the nickname of the player who asked to create the new game
      */
@@ -477,6 +481,7 @@ public class TextUI extends View{
     /**
      * Once the player receives the LobbyPlayerList message from the server, the method is called by
      * processMessage, to update the player's list in the Lobby phase and print the player's list updated.
+     * @implSpec NON-BLOCKING
      * @param players the list updated of players in the game.
      */
     @Override
@@ -488,6 +493,7 @@ public class TextUI extends View{
     /**
      * The Method used to update the player's board and public info when the player disconnects from the game after the
      * placement of the card.
+     * @implSpec NON-BLOCKING
      * @param playerNickname the nickname of the player whose board should be updated with the rollback
      * @param removedCard the ID of the card that should be removed from the board and the public info of the player
      * @param playerPoints the points of the player after the rollback
@@ -542,6 +548,7 @@ public class TextUI extends View{
     /**
      * After receiving the GameStarted message from the server, the method is called to set up the view of the player
      * and initialize the data and the boards of the players.
+     * @implSpec NON-BLOCKING
      */
     @Override
     public void setUpPlayersData() {
@@ -552,12 +559,14 @@ public class TextUI extends View{
             boards.put(player, new BoardView(new int[]{80, 80, 80, 80}, new String[160][160]));
         }
     }
+
     /**
      * Once the player receives the MatchStatus message from the server, the method is called by processMessage to
      * update the match status of the player, and print the message to notify the player of the current match status.
      * And if the match status is TERMINATING, the method is called to show the points of all players in the game.
      * One time the match status is PLAYING, the method is called to start the readInputThread to get the input from
      * the player when it is not the player's turn.
+     * @implSpec NON-BLOCKING
      * @param matchStatus the current match status received from the server
      */
     @Override
@@ -602,7 +611,8 @@ public class TextUI extends View{
 
     /**
      * Once received the ConfirmedStarterCardSideSelectionMessage from the server, the method is called by processMessage to
-     * update the view of the player and print the message to notify the player that the starter card is selected
+     * update the view of the player and print the message to notify the player that the starter card is selected.
+     * @implSpec NON-BLOCKING
      * @param colour the colour of the player in the game.
      * @param cardID the ID of the starter card selected by the player and received from the server.
      * @param isUp indicates the side of the card selected by the player to be placed.
@@ -632,6 +642,7 @@ public class TextUI extends View{
      * processMessage to request the player to select the secret objective card they want to use. The player will be
      * able to see the front and back side of the card and select the card they want to use. Also, the player will be
      * able to see the common objective cards and three cards received from the server with this message.
+     * @implSpec NON-BLOCKING
      * @param secrets the secret objective cards received from the server and assigned to the player.
      * @param common the common objective cards of the game received from the server.
      * @param hand the three cards received from the server and should be stored in the player's hand.
@@ -653,6 +664,7 @@ public class TextUI extends View{
 
     /**
      * Method that save the ID of the starter card received from the server.
+     * @implSpec NON-BLOCKING
      * @param cardId the ID of the starter card received from the server.
      */
     @Override
@@ -686,6 +698,7 @@ public class TextUI extends View{
     /**
      * Once received the SecretObjCardConfirmationMessage from the server, the method is called by processMessage to
      * update the view of the player and print the message to notify the player that the secret objective card is selected
+     * @implSpec NON-BLOCKING
      * @param chosenSecretObjectiveCard the ID of the secret objective card selected by the player.
      */
     @Override
@@ -700,7 +713,7 @@ public class TextUI extends View{
     /**
      * This method is called by processMessage to update the all data of the players in the game when the game enters
      * the playing phase or when the player reconnects to the game.
-     *
+     * @implSpec NON-BLOCKING
      * @param playerNicknames                    the nicknames of the players in the game.
      * @param playerConnected                    the connection status of the players in the game.
      * @param playerColours                      the colours assigned to the players in the game.
@@ -874,6 +887,7 @@ public class TextUI extends View{
      * Once the player receives the PlayerTurnMessage from the server, the method is called by processMessage to update
      * the currentPlayer in the game and print the message to notify the player whose turn is now, also, the method
      * notifies players the order of the turn in the game.
+     * @implSpec NON-BLOCKING
      * @param playerNickname the nickname of the player who should be able to place the card and draw card in the field.
      */
     @Override
@@ -931,6 +945,7 @@ public class TextUI extends View{
     }
 
     //------------playing-------------
+
     /**
      * Use this method to request the player to place a card in the field. The player will be able to see the board
      * before and after placing the card. Also, the player will be able to see the cards in the hand and select one
@@ -1003,6 +1018,7 @@ public class TextUI extends View{
      * to store the card information, update the board of the player. If the player who placed the card is this player,
      * print the message to notify the player that the card is placed successfully. Also, the method requests the player
      * to draw a card from the deck.
+     * @implSpec NON-BLOCKING
      * @param playerNickname the nickname of the player who placed the card in the field.
      * @param placedCard the ID of the card placed in the field.
      * @param placedCardCoordinates the coordinates of the card selected.
@@ -1071,7 +1087,7 @@ public class TextUI extends View{
     /**
      * Once received the PlacedCardConfirmationMessage from the server, the method is called by processMessage to store
      * the card information, update the board of the player.
-     *
+     * @implSpec NON-BLOCKING
      * @param playerNickname the nickname of the player who placed the card in the field.
      * @param cardID         the card should be placed in the field.
      * @param x              the x coordinate of the card placed in the field.
@@ -1173,6 +1189,7 @@ public class TextUI extends View{
      * Once the player receives the DrawCardConfirmationMessage from the server, the method is called by processMessage
      * to update the hand of the player and print the message to notify the player that the card is added in the hand
      * successfully. Also, the method prints the hand of the player after drawing the card.
+     * @implSpec NON-BLOCKING
      * @param hand the hand of the player after drawing the card.
      */
     @Override
@@ -1190,6 +1207,7 @@ public class TextUI extends View{
      * Once the player receives the DeckSizeUpdateMessage from the server, the method is called by processMessage to
      * update the deck size and the current visible resource cards and gold cards in the game. Also, the method prints
      * the message to notify the player the situation of the deck after this turn.
+     * @implSpec NON-BLOCKING
      * @param resourceDeckSize the size of the resource deck in the game.
      * @param goldDeckSize the size of the gold deck in the game.
      * @param currentResourceCards the current visible resource cards in the game that the player can draw.
@@ -1240,6 +1258,7 @@ public class TextUI extends View{
      * Method called when player opens chat from getInput method.
      * Enables the user to select a player to chat with, or chat with all players.
      * The user can also exit the chat.
+     * @implSpec BLOCKING
      */
     @Override
     public void startChatting() {
@@ -1317,6 +1336,8 @@ public class TextUI extends View{
 
     /**
      * Method to print out the chat history of the player.
+     * @implSpec NON-BLOCKING
+     * @param chatHistory the chat history of the player.
      */
     @Override
     public void showChatHistory(List<ChatMessage> chatHistory){
@@ -1337,6 +1358,7 @@ public class TextUI extends View{
     /**
      * Method used to update the chat history of the player when a new message is received, add the message to the chat
      * history and print the chat history if the player is in the chat mode.
+     * @implSpec NON-BLOCKING
      * @param recipientString the nickname of the recipient of the message.
      * @param senderNickname the nickname of the sender of the message.
      * @param content the content of the message.
@@ -1352,8 +1374,10 @@ public class TextUI extends View{
     }
 
     //-------------------Show Methods-------------------
+
     /**
      * Print the deck size and the current visible resource cards and gold cards in the game.
+     * @implSpec NON-BLOCKING
      */
     @Override
     public void showDeck() {
@@ -1369,6 +1393,7 @@ public class TextUI extends View{
 
     /**
      * Print the list of commands that the player can use in the service mode.
+     * @implSpec NON-BLOCKING
      */
     @Override
     public void showHelpInfo() {
@@ -1391,8 +1416,10 @@ public class TextUI extends View{
                 
                 """);
     }
+
     /**
      * Print list of the players in the game.
+     * @implSpec NON-BLOCKING
      */
     public void showPlayerInGame() {
         out.println("The players in the game are: " + players);
@@ -1400,6 +1427,7 @@ public class TextUI extends View{
 
     /**
      * Print the board view and the resources in the field of the given player.
+     * @implSpec NON-BLOCKING
      * @param playerNickname the nickname of the player whose field should be printed.
      */
     public void showPlayersField(String playerNickname) {
@@ -1409,6 +1437,7 @@ public class TextUI extends View{
 
     /**
      * Print the resources in the field of the player.
+     * @implSpec NON-BLOCKING
      * @param playerNickname the nickname of the player whose resources should be printed.
      */
     @Override
@@ -1425,7 +1454,7 @@ public class TextUI extends View{
     /**
      * Print the zone of the board where the player placed his cards and the available positions for the next
      * placement.
-     *
+     * @implSpec NON-BLOCKING
      * @param nickname the nickname of the player, the owner of the board that should be printed.
      */
     private void showBoard(String nickname) {
@@ -1442,8 +1471,10 @@ public class TextUI extends View{
             out.println();
         }
     }
+
     /**
      * Print the cards in the hand of the player.
+     * @implSpec NON-BLOCKING
      */
     @Override
     public void showHand() {
@@ -1458,6 +1489,7 @@ public class TextUI extends View{
 
     /**
      * Print the objective cards.
+     * @implSpec NON-BLOCKING
      * @param ObjCards the ID of the objective cards that should be printed.
      */
     private void showObjectiveCards(ArrayList<Integer> ObjCards) {
@@ -1470,6 +1502,9 @@ public class TextUI extends View{
 
     /**
      * Print a card based on the ID of the card and the side of the card.
+     * @implSpec NON-BLOCKING
+     * @param ID the ID of the card.
+     * @param isUp the side of the card.
      */
     @Override
     public void showCard(int ID, boolean isUp) {
@@ -1490,6 +1525,7 @@ public class TextUI extends View{
     /**
      * Print at the end of the match the final points of the players, the secret objective card of the players, and the
      * points gained from the objective card. Also, the method prints the winners of the match.
+     * @implSpec NON-BLOCKING
      * @param players the nicknames of the players in the game.
      * @param points the final points of the players in the game.
      * @param secrets the secret objective card of the players.
@@ -1519,6 +1555,7 @@ public class TextUI extends View{
     //-------------------Card Factory-------------------
     /**
      * Search the card description based on the ID of the card.
+     * @implSpec NON-BLOCKING
      * @param ID the ID of the card.
      * @return the card description.
      */
@@ -1538,6 +1575,7 @@ public class TextUI extends View{
     /**
      * Set the image of the card based on the card description, the view of the card in TUI. Store the image of the card
      * in the hashmap with the ID of the card as the key.
+     * @implSpec NON-BLOCKING
      * @return hashmap with the ID of the card as the key and the image of the card as the value.
      */
     private HashMap<Integer, ArrayList<String>> setImg() {
@@ -1753,7 +1791,7 @@ public class TextUI extends View{
 
     /**
      * Use this method to set the color of the card based on the kingdom of the card.
-     *
+     * @implSpec NON-BLOCKING
      * @param kingdom the kingdom of the card.
      * @return the string of the color in ASCII escape code.
      */
@@ -1772,7 +1810,7 @@ public class TextUI extends View{
     /**
      * The Method used to convert the integer array of the condition count of the card to a string of icons, using the
      * Unicode characters and added it in one string.
-     *
+     * @implSpec NON-BLOCKING
      * @param conditionCount the integer array of the requirement counts of the card.
      * @return the string of icons which contains the icons of the requirements of the card.
      */
@@ -1792,7 +1830,7 @@ public class TextUI extends View{
 
     /**
      * Method used to convert the corner type of the card to an icon, using the Unicode characters.
-     *
+     * @implSpec NON-BLOCKING
      * @param type the corner type of the card.
      * @return the icon of the corner type of the card.
      */
@@ -1815,6 +1853,7 @@ public class TextUI extends View{
     /**
      * Method used to convert the type of the resource/object that stored in the array of requirements of the card or
      * in the array of the permanent resources of the card to an icon, using the Unicode characters.
+     * @implSpec NON-BLOCKING
      */
     private static String iconArrayElement(int type) {
         String icon;
@@ -1833,6 +1872,7 @@ public class TextUI extends View{
 
     /**
      * Method used to convert the colour of the card to an icon, using the Unicode characters.
+     * @implSpec NON-BLOCKING
      */
     private static String iconCard(String type) {
         String icon;
@@ -1848,6 +1888,7 @@ public class TextUI extends View{
 
     /**
      * Colour the string based on the integer received.
+     * @implSpec NON-BLOCKING
      * @param colour indicates the colour of the string.
      * @return the string “colour” coloured.
      */
@@ -1874,12 +1915,13 @@ public class TextUI extends View{
             }
         }
     }
+
     //-------------------utilities-------------------
 
     /**
      * Used method to update the dimensions of the player's board view after placing a card on the board.
      * The method is called by the {@link View#updateAfterPlacedCard} method.
-     *
+     * @implSpec NON-BLOCKING
      * @param posX   the x coordinate of the card placed.
      * @param posY   the y coordinate of the card placed.
      * @param limits the array of the limits contains the maximum x and y and the minimum x and y updated.
@@ -1890,6 +1932,7 @@ public class TextUI extends View{
         limits[2] = Math.max(limits[2], posY + 1);
         limits[3] = Math.min(limits[3], posY - 1);
     }
+
     /**
      * Used method to handle the failure messages received from the server and to ask the user to try again.
      * @param event the event that failed.
@@ -1938,8 +1981,10 @@ public class TextUI extends View{
             }
         }
     }
+
     /**
      * Used method to print the message to notify the player when is necessary.
+     * @implSpec NON-BLOCKING
      * @param event the type of the event that should be handled.
      * @param nickname the nickname of the player will be used in the message.
      */
