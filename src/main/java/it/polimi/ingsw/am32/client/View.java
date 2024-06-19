@@ -176,10 +176,10 @@ public abstract class View{
         SKClientNode clientNode = new SKClientNode(this,serverIP,port);
         this.clientNode = clientNode;
         clientNode.startConnection();
+
         this.askListener = new AskListener(clientNode);
         Thread askListener = new Thread(this.askListener); // Create a new thread listen for messages from the client
         askListener.start();
-        //TODO verify if this is correct
     }
 
     /**
@@ -190,7 +190,6 @@ public abstract class View{
      * @throws ConnectionSetupFailedException if the connection setup fails.
      */
     public void setRMIClient(String serverIP, int port) throws ConnectionSetupFailedException {
-        //TODO verify if this is correct
         try{
             RMIClientNode clientNode = new RMIClientNode(this, serverIP, port);
             this.clientNode = clientNode;
@@ -200,7 +199,7 @@ public abstract class View{
             Thread askListenerThread = new Thread(this.askListener);
             askListenerThread.start();
         }catch (RemoteException e) {
-            //TODO
+            throw new ConnectionSetupFailedException();
         }
     }
     /**
