@@ -354,7 +354,10 @@ public class GraphicalUI extends View {
      */
     @Override
     public void chooseConnection() {
+        // set the current event to CHOOSE_CONNECTION
         currentEvent = Event.CHOOSE_CONNECTION;
+
+        // create the selectionPane and the connectionRoot
         selectionPane = new StackPane();
         connectionRoot = new StackPane();
 
@@ -390,13 +393,14 @@ public class GraphicalUI extends View {
         Button OkRMIButton = createButton("[OK]", 160, 0); // create the button Ok to confirm the input.
         RMIRoot.getChildren().addAll(OkRMIButton, labelRMIIP, RMIIp, RMIPort); // the view when the player choose the socket connection
 
-        // set the action of the buttons
+        // set the action of the buttons (Socket)
         socketButton.setOnAction(e -> {
             selectionPane.getChildren().remove(connectionRoot); // exit from the choose connection page
             selectionPane.getChildren().add(socketRoot); // enter the socket connection page
         });
 
         OkButton.setOnAction(e -> {
+            OkButton.setDisable(true);
             String ServerIP = ip.getText(); // Read the player's input and save it the server IP address
             String ServerPort = port.getText();
             try {
@@ -406,26 +410,29 @@ public class GraphicalUI extends View {
                     selectionPane.getChildren().remove(socketRoot);
                     askSelectGameMode();
                 } else {
-                    createAlert("Invalid IP/port number");
+                    createAlert("Invalid IP or PORT number!");
                     ip.clear();
                     port.clear();
                 }
             } catch (NumberFormatException ex) {
-                createAlert("Invalid port number");
+                createAlert("Invalid PORT number!");
                 port.clear();
             } catch (ConnectionSetupFailedException ex) {
-                createAlert("Connection failed");
+                createAlert("Connection failed! Check the IP and/or PORT number and try again!");
                 ip.clear();
                 port.clear();
             }
+            OkButton.setDisable(false);
         });
-        // set the action of the buttons
+
+        // set the action of the buttons (RMI)
         rmiButton.setOnAction(e -> {
             selectionPane.getChildren().remove(connectionRoot); // exit from the choose connection page
             selectionPane.getChildren().add(RMIRoot); // enter the socket connection page
         });
 
         OkRMIButton.setOnAction(e -> {
+            OkRMIButton.setDisable(true);
             String ServerIP = RMIIp.getText(); // Read the player's input and save it the server IP address
             String ServerPort = RMIPort.getText();
             try {
@@ -442,18 +449,17 @@ public class GraphicalUI extends View {
             } catch (NumberFormatException ex) {
                 createAlert("Invalid port number");
                 port.clear();
-            } catch (ConnectionSetupFailedException ex) { //TODO
-                /*
-                createAlert("Connection failed");
+            } catch (ConnectionSetupFailedException ex) {
+                createAlert("Connection failed! Check the IP and/or PORT number and try again!");
                 ip.clear();
                 port.clear();
-                */
             }
+            OkRMIButton.setDisable(false);
         });
     }
+
     /**
      * Set the socket connection between the client and the server.
-     *
      * @param ServerIP the IP address of the server
      * @param portNumber the port number of the server
      */
@@ -461,11 +467,16 @@ public class GraphicalUI extends View {
     public void setSocketClient(String ServerIP, int portNumber) throws ConnectionSetupFailedException {
         super.setSocketClient(ServerIP, portNumber);
     }
+
+    /**
+     * Set the RMI connection between the client and the server.
+     * @param serverURL the URL of the server
+     * @param port the port number of the server
+     */
     @Override
     public void setRMIClient(String serverURL, int port) throws ConnectionSetupFailedException {
-        super.setRMIClient(serverURL, port); // see the method in the superclass
+        super.setRMIClient(serverURL, port);
     }
-
 
     /**
      * Set the page where the player can select the game mode. The player can choose between creating a new game, joining
